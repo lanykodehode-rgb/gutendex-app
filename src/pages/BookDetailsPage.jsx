@@ -6,22 +6,63 @@ function BookDetailsPage() {
 
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch(`https://gutendex.com/books/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
+    async function fetchBook() {
+      try {
+        setLoading(true);
+        setError("");
+
+        const response = await fetch(
+          `https://gutendex.com/books/${id}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Could not fetch book");
+        }
+
+        const data = await response.json();
         setBook(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
         setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching book:", error);
-        setLoading(false);
-      });
+      }
+    }
+
+    fetchBook();
   }, [id]);
+
+  function addToFavorites() {
+    const favorites =
+      JSON.parse(localStorage.getItem("favorites")) || [];
+
+    const alreadyExists = favorites.some(
+      (favorite) => favorite.id === book.id
+    );
+
+    if (alreadyExists) {
+      alert("This book is already in favorites.");
+      return;
+    }
+
+    const updatedFavorites = [...favorites, book];
+
+    localStorage.setItem(
+      "favorites",
+      JSON.stringify(updatedFavorites)
+    );
+
+    alert("Book added to favorites!");
+  }
 
   if (loading) {
     return <h2>Loading book...</h2>;
+  }
+
+  if (error) {
+    return <h2>{error}</h2>;
   }
 
   if (!book) {
@@ -32,6 +73,17 @@ function BookDetailsPage() {
 
   const author =
     book.authors?.[0]?.name || "Unknown author";
+
+  const category =
+    book.subjects?.[0] || "Unknown";
+
+  const language =
+    book.languages?.join(", ") || "Unknown";
+
+  const digitalBook =
+    book.formats?.["text/html"] ||
+    book.formats?.["application/epub+zip"] ||
+    book.formats?.["text/plain; charset=utf-8"];
 
   return (
     <div className="bookDetails">
@@ -51,23 +103,33 @@ function BookDetailsPage() {
         </p>
 
         <p>
-          <strong>Downloads:</strong> {book.download_count}
+          <strong>Downloads:</strong>{" "}
+          {book.download_count}
         </p>
 
         <p>
-          <strong>Languages:</strong>{" "}
-          {book.languages?.join(", ")}
+          <strong>Category:</strong> {category}
         </p>
 
         <p>
-          <strong>Subjects:</strong>
+          <strong>Language:</strong> {language}
         </p>
 
-        <ul>
-          {book.subjects?.slice(0, 5).map((subject) => (
-            <li key={subject}>{subject}</li>
-          ))}
-        </ul>
+        {digitalBook && (
+          <p>
+            <a
+              href={digitalBook}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Read digital book
+            </a>
+          </p>
+        )}
+
+        <button onClick={addToFavorites}>
+          Add to Favorites
+        </button>
       </div>
     </div>
   );

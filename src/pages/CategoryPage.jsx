@@ -6,33 +6,39 @@ function CategoryPage() {
   const { category } = useParams();
 
   const [books, setBooks] = useState([]);
+  const [next, setNext] = useState(null);
+  const [previous, setPrevious] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    async function fetchBooks() {
-      try {
-        setLoading(true);
-        setError("");
+  async function fetchBooks(url) {
+    try {
+      setLoading(true);
+      setError("");
 
-        const response = await fetch(
-          `https://gutendex.com/books/?topic=${encodeURIComponent(category)}`
-        );
+      const response = await fetch(url);
 
-        if (!response.ok) {
-          throw new Error("Could not fetch books");
-        }
-
-        const data = await response.json();
-        setBooks(data.results);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+      if (!response.ok) {
+        throw new Error("Could not fetch books");
       }
-    }
 
-    fetchBooks();
+      const data = await response.json();
+
+      setBooks(data.results);
+      setNext(data.next);
+      setPrevious(data.previous);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    const url =
+      `https://gutendex.com/books/?topic=${encodeURIComponent(category)}`;
+
+    fetchBooks(url);
   }, [category]);
 
   if (loading) {
@@ -48,6 +54,22 @@ function CategoryPage() {
       <h1>{category}</h1>
 
       <BookList books={books} />
+
+      <div>
+        <button
+          disabled={!previous}
+          onClick={() => fetchBooks(previous)}
+        >
+          Previous
+        </button>
+
+        <button
+          disabled={!next}
+          onClick={() => fetchBooks(next)}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }
