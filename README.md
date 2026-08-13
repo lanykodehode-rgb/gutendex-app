@@ -1,16 +1,72 @@
-# React + Vite
+# BookFinder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+BookFinder is a React application where users can search for books and explore books from different categories.
 
-Currently, two official plugins are available:
+The application uses the Gutendex API to get information about books from Project Gutenberg.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+Users can:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* View popular books
+* Search for books
+* Browse books by category
+* View information about a specific book
+* Add books to favorites
+* Save favorites in localStorage
+* Browse different pages of books
 
-## Expanding the ESLint configuration
+## Categories
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The application includes several book categories such as:
+
+* Fiction
+* Mystery
+* Thriller
+* Romance
+* Fantasy
+* Morality
+* Society
+* Power
+* Justice
+* Adventure
+* Tragedy
+* War
+* Philosophy
+
+## Book information
+
+Each book can show information such as:
+
+* Title
+* Author
+* Cover image
+* Number of downloads
+* Language
+* Subjects
+* Link to the digital book
+
+## Technologies
+
+This project was built with:
+
+* React
+* React Router
+* JavaScript
+* CSS
+* Gutendex API
+* localStorage
+* Vite
+
+## API
+
+Book data is fetched from the Gutendex API.
+
+Gutendex provides access to books from Project Gutenberg.
+
+## Installation
+
+Clone the repository and install the dependencies:
+
+```bash
+npm install
