@@ -1,0 +1,160 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #222;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.header {
+  background: white;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.topHeader {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.searchForm {
+  flex: 1;
+  display: flex;
+}
+
+.searchForm input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px 0 0 6px;
+}
+
+.searchForm button {
+  padding: 12px 20px;
+  border: none;
+  background: #222;
+  color: white;
+  cursor: pointer;
+}
+
+.categories {
+  max-width: 1200px;
+  margin: 20px auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.categories a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.bookGrid {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fill, minmax(180px, 1fr));
+  gap: 25px;
+}
+
+.bookCard {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.bookCard:hover {
+  transform: translateY(-4px);
+}
+
+.bookCard img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+.noCover {
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ddd;
+}
+
+.bookInfo {
+  padding: 15px;
+}
+
+.bookInfo h3 {
+  margin-top: 0;
+}
+
+.pagination {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+button {
+  padding: 10px 18px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.bookDetails {
+  display: flex;
+  gap: 40px;
+}
+
+.bookDetails img {
+  width: 300px;
+  max-width: 100%;
+}
+
+.favoritesHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 700px) {
+  .topHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .bookDetails {
+    flex-direction: column;
+  }
+
+  .bookDetails img {
+    width: 220px;
+  }
+}
