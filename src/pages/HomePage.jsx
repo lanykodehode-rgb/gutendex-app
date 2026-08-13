@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import BookList from "../components/BookList.jsx";
 
 function HomePage() {
@@ -7,6 +8,10 @@ function HomePage() {
   const [previous, setPrevious] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const [searchParams] = useSearchParams();
+
+  const search = searchParams.get("search");
 
   async function fetchBooks(url) {
     try {
@@ -32,8 +37,14 @@ function HomePage() {
   }
 
   useEffect(() => {
-    fetchBooks("https://gutendex.com/books/");
-  }, []);
+    let url = "https://gutendex.com/books/";
+
+    if (search) {
+      url += `?search=${encodeURIComponent(search)}`;
+    }
+
+    fetchBooks(url);
+  }, [search]);
 
   if (loading) {
     return <h2>Loading books...</h2>;
@@ -45,7 +56,11 @@ function HomePage() {
 
   return (
     <div>
-      <h1>Popular Books</h1>
+      <h1>
+        {search
+          ? `Search results for "${search}"`
+          : "Popular Books"}
+      </h1>
 
       <BookList books={books} />
 

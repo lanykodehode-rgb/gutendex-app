@@ -5,156 +5,237 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f5f5f5;
+  background: #f4f4f4;
   color: #222;
 }
 
 a {
-  color: inherit;
   text-decoration: none;
+  color: inherit;
 }
 
-.header {
+button,
+input {
+  font: inherit;
+}
+
+header {
   background: white;
-  padding: 20px;
+  padding: 24px 32px;
   border-bottom: 1px solid #ddd;
 }
 
-.topHeader {
-  max-width: 1200px;
-  margin: auto;
+header h2 {
+  margin: 0 0 20px;
+  font-size: 32px;
+}
+
+header form {
   display: flex;
-  align-items: center;
-  gap: 30px;
+  gap: 10px;
+  margin-bottom: 18px;
 }
 
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.searchForm {
-  flex: 1;
-  display: flex;
-}
-
-.searchForm input {
-  flex: 1;
+header input {
+  width: 320px;
   padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px 0 0 6px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
 }
 
-.searchForm button {
-  padding: 12px 20px;
+header button {
+  padding: 12px 22px;
   border: none;
+  border-radius: 6px;
   background: #222;
   color: white;
   cursor: pointer;
 }
 
-.categories {
-  max-width: 1200px;
-  margin: 20px auto 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+header button:hover {
+  opacity: 0.85;
 }
 
-.categories a:hover {
+header nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+header nav a {
+  font-weight: bold;
+}
+
+header nav a:hover {
   text-decoration: underline;
 }
 
-.container {
+main {
   max-width: 1200px;
   margin: 40px auto;
-  padding: 0 20px;
+  padding: 0 24px;
+}
+
+main h1 {
+  font-size: 36px;
+  margin-bottom: 28px;
 }
 
 .bookGrid {
   display: grid;
-  grid-template-columns:
-    repeat(auto-fill, minmax(180px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, 220px);
+  gap: 24px;
+  align-items: start;
 }
 
 .bookCard {
+  width: 220px;
   background: white;
+  padding: 15px;
   border-radius: 10px;
-  overflow: hidden;
-  transition: transform 0.2s;
-}
-
-.bookCard:hover {
-  transform: translateY(-4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .bookCard img {
   width: 100%;
-  height: 260px;
+  height: 280px;
   object-fit: cover;
+  border-radius: 6px;
 }
 
-.noCover {
-  height: 260px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #ddd;
+.bookCard h2 {
+  font-size: 19px;
+  margin: 14px 0 10px;
+  line-height: 1.3;
 }
 
-.bookInfo {
-  padding: 15px;
+.bookCard p {
+  margin: 8px 0;
+  line-height: 1.4;
 }
 
-.bookInfo h3 {
-  margin-top: 0;
-}
-
-.pagination {
-  margin-top: 40px;
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-button {
-  padding: 10px 18px;
+.bookCard button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background: #222;
+  color: white;
   cursor: pointer;
 }
 
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.bookCard button:hover {
+  opacity: 0.85;
 }
 
 .bookDetails {
   display: flex;
   gap: 40px;
+  background: white;
+  padding: 28px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.bookDetails img {
-  width: 300px;
+.detailsCover {
+  width: 260px;
   max-width: 100%;
+  object-fit: cover;
+  border-radius: 6px;
 }
 
-.favoritesHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.bookDetails h1 {
+  margin-top: 0;
+}
+
+.bookDetails p {
+  line-height: 1.6;
+}
+
+.bookDetails ul {
+  padding-left: 20px;
+}
+
+.bookDetails button {
+  margin-top: 18px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 6px;
+  background: #222;
+  color: white;
+  cursor: pointer;
+}
+
+.bookDetails a {
+  text-decoration: underline;
+}
+
+main > div > button {
+  margin-top: 30px;
+  margin-right: 10px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  background: #222;
+  color: white;
+  cursor: pointer;
+}
+
+main > div > button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 @media (max-width: 700px) {
-  .topHeader {
+  header {
+    padding: 20px;
+  }
+
+  header h2 {
+    font-size: 28px;
+  }
+
+  header form {
     flex-direction: column;
-    align-items: stretch;
+  }
+
+  header input {
+    width: 100%;
+  }
+
+  header button {
+    width: 100%;
+  }
+
+  main {
+    margin: 25px auto;
+    padding: 0 16px;
+  }
+
+  main h1 {
+    font-size: 30px;
+  }
+
+  .bookGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .bookCard {
+    width: 100%;
+  }
+
+  .bookCard img {
+    height: 360px;
   }
 
   .bookDetails {
     flex-direction: column;
+    gap: 24px;
   }
 
-  .bookDetails img {
+  .detailsCover {
     width: 220px;
   }
 }

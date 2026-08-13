@@ -6,128 +6,69 @@ function BookDetailsPage() {
 
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
 
   useEffect(() => {
-    async function fetchBook() {
-      try {
-        setLoading(true);
-
-        const response = await fetch(
-          `https://gutendex.com/books/${id}/`
-        );
-
-        if (!response.ok) {
-          throw new Error("Could not fetch book");
-        }
-
-        const data = await response.json();
+    fetch(`https://gutendex.com/books/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
         setBook(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
         setLoading(false);
-      }
-    }
-
-    fetchBook();
+      })
+      .catch((error) => {
+        console.error("Error fetching book:", error);
+        setLoading(false);
+      });
   }, [id]);
-
-  function addToFavorites() {
-    const favorites =
-      JSON.parse(localStorage.getItem("favorites")) || [];
-
-    const alreadyFavorite = favorites.some(
-      (favorite) => favorite.id === book.id
-    );
-
-    if (!alreadyFavorite) {
-      favorites.push(book);
-
-      localStorage.setItem(
-        "favorites",
-        JSON.stringify(favorites)
-      );
-
-      alert("Book added to favorites!");
-    } else {
-      alert("This book is already in favorites.");
-    }
-  }
 
   if (loading) {
     return <h2>Loading book...</h2>;
   }
 
-  if (error) {
-    return <h2>{error}</h2>;
-  }
-
   if (!book) {
-    return <h2>Book not found</h2>;
+    return <h2>Book not found.</h2>;
   }
 
-  const cover = book.formats["image/jpeg"];
+  const cover = book.formats?.["image/jpeg"];
 
   const author =
-    book.authors.length > 0
-      ? book.authors[0].name
-      : "Unknown author";
-
-  const category =
-    book.subjects.length > 0
-      ? book.subjects[0]
-      : "Unknown";
-
-  const language =
-    book.languages.length > 0
-      ? book.languages.join(", ")
-      : "Unknown";
-
-  const bookLink =
-    book.formats["text/html"] ||
-    book.formats["application/epub+zip"] ||
-    book.formats["text/plain; charset=utf-8"];
+    book.authors?.[0]?.name || "Unknown author";
 
   return (
-    <div>
-      <h1>{book.title}</h1>
-
+    <div className="bookDetails">
       {cover && (
         <img
           src={cover}
           alt={book.title}
-          width="250"
+          className="detailsCover"
         />
       )}
 
-      <h3>Author</h3>
-      <p>{author}</p>
+      <div>
+        <h1>{book.title}</h1>
 
-      <h3>Downloads</h3>
-      <p>{book.download_count}</p>
-
-      <h3>Category</h3>
-      <p>{category}</p>
-
-      <h3>Language</h3>
-      <p>{language}</p>
-
-      {bookLink && (
         <p>
-          <a
-            href={bookLink}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Read book
-          </a>
+          <strong>Author:</strong> {author}
         </p>
-      )}
 
-      <button onClick={addToFavorites}>
-        Add to Favorites
-      </button>
+        <p>
+          <strong>Downloads:</strong> {book.download_count}
+        </p>
+
+        <p>
+          <strong>Languages:</strong>{" "}
+          {book.languages?.join(", ")}
+        </p>
+
+        <p>
+          <strong>Subjects:</strong>
+        </p>
+
+        <ul>
+          {book.subjects?.slice(0, 5).map((subject) => (
+            <li key={subject}>{subject}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

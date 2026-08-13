@@ -1,11 +1,9 @@
 import { useState } from "react";
-import BookList from "../components/BookList";
+import BookList from "../components/BookList.jsx";
 
 function FavoritesPage() {
   const [favorites, setFavorites] = useState(() => {
-    return (
-      JSON.parse(localStorage.getItem("favorites")) || []
-    );
+    return JSON.parse(localStorage.getItem("favorites")) || [];
   });
 
   function clearFavorites() {
@@ -14,19 +12,21 @@ function FavoritesPage() {
   }
 
   return (
-    <section>
-      <div className="favoritesHeader">
-        <h1>Favorites</h1>
+    <div>
+      <h1>Favorites</h1>
 
-        {favorites.length > 0 && (
+      {favorites.length === 0 ? (
+        <p>No favorite books yet.</p>
+      ) : (
+        <>
+          <BookList books={favorites} />
+
           <button onClick={clearFavorites}>
-            Clear favorites
+            Clear Favorites
           </button>
-        )}
-      </div>
-
-      <BookList books={favorites} />
-    </section>
+        </>
+      )}
+    </div>
   );
 }
 

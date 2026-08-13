@@ -1,25 +1,46 @@
 import { Link } from "react-router-dom";
 
 function BookCard({ book }) {
-  const cover = book.formats["image/jpeg"];
+  const addToFavorites = () => {
+    const favorites =
+      JSON.parse(localStorage.getItem("favorites")) || [];
+
+    const alreadyExists = favorites.some(
+      (favorite) => favorite.id === book.id
+    );
+
+    if (!alreadyExists) {
+      favorites.push(book);
+
+      localStorage.setItem(
+        "favorites",
+        JSON.stringify(favorites)
+      );
+
+      alert("Book added to favorites!");
+    } else {
+      alert("This book is already in favorites.");
+    }
+  };
+
+  const cover =
+    book.formats?.["image/jpeg"];
 
   const author =
-    book.authors.length > 0
-      ? book.authors[0].name
-      : "Unknown author";
+    book.authors?.[0]?.name || "Unknown author";
 
   return (
-    <div>
+    <div className="bookCard">
       <Link to={`/book/${book.id}`}>
         {cover && (
           <img
             src={cover}
             alt={book.title}
-            width="150"
+            className="bookCover"
           />
         )}
 
-        <h3>{book.title}</h3>
+        <h2>{book.title}</h2>
       </Link>
 
       <p>{author}</p>
@@ -27,6 +48,10 @@ function BookCard({ book }) {
       <p>
         Downloads: {book.download_count}
       </p>
+
+      <button onClick={addToFavorites}>
+        Add to Favorites
+      </button>
     </div>
   );
 }

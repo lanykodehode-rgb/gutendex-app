@@ -2,7 +2,7 @@ import BookCard from "./BookCard.jsx";
 
 function BookList({ books }) {
   return (
-    <div>
+    <div className="bookGrid">
       {books.map((book) => (
         <BookCard
           key={book.id}
